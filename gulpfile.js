@@ -1,13 +1,13 @@
-'use strict';
-
 const gulp = require('gulp');
-const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
+
+const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 
 function lazyTaskRequire(name, path, opt) {
-	opt = opt || {};
-	gulp.task(name, function (cb) {
-		let task = require(path).call(this, opt);
+	const setting = opt || {};
+	gulp.task(name, (cb) => {
+		// eslint-disable-line global-require
+		const task = require(path).call(this, setting);
 		return task(cb);
 	});
 }
@@ -15,19 +15,19 @@ function lazyTaskRequire(name, path, opt) {
 // Styles
 lazyTaskRequire('styles', './tasks/styles', {
 	src: 'source/styles/*.scss',
-	isDev: isDevelopment
+	isDev: isDevelopment,
 });
 
 // Assets
 lazyTaskRequire('assets', './tasks/assets', {
-	src: 'source/assets/**/*'
+	src: 'source/assets/**/*',
 });
 
 // Clean
 lazyTaskRequire('clean', './tasks/clean');
 
 // Pug
-lazyTaskRequire('pug','./tasks/pug',{src: 'source/templates/*.jade'});
+lazyTaskRequire('pug', './tasks/pug', { src: 'source/templates/*.jade' });
 
 // Build
 gulp.task('build', gulp.series(
@@ -36,7 +36,7 @@ gulp.task('build', gulp.series(
 ));
 
 // Watch
-gulp.task('watch', function () {
+gulp.task('watch', () => {
 	gulp.watch('source/styles', gulp.series('styles'));
 	gulp.watch('source/assets', gulp.series('assets'));
 	gulp.watch('source/templates', gulp.series('pug'));
@@ -47,7 +47,7 @@ lazyTaskRequire('serve', './tasks/serve');
 
 // ESlint
 lazyTaskRequire('eslint', './tasks/eslint', {
-	src: 'source/**/*.js'
+	src: 'source/**/*.js',
 });
 
 // Dev

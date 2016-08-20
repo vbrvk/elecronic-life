@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 
-const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV !== 'production';
 
 
 function lazyTaskRequire(name, path, opt) {
@@ -29,10 +29,15 @@ lazyTaskRequire('clean', './tasks/clean');
 // Pug
 lazyTaskRequire('pug', './tasks/pug', { src: 'source/templates/*.jade' });
 
+// Webpack
+lazyTaskRequire('webpack', './tasks/webpack', {
+	isDev: isDevelopment,
+});
+
 // Build
 gulp.task('build', gulp.series(
 	'clean',
-	gulp.parallel('styles', 'assets', 'pug')
+	gulp.parallel('styles', 'assets', 'pug', 'webpack')
 ));
 
 // Watch
@@ -46,9 +51,9 @@ gulp.task('watch', () => {
 lazyTaskRequire('serve', './tasks/serve');
 
 // ESlint
-lazyTaskRequire('eslint', './tasks/eslint', {
+lazyTaskRequire('lint', './tasks/eslint', {
 	src: 'source/**/*.js',
 });
 
 // Dev
-gulp.task('dev', gulp.series('build', 'eslint', gulp.parallel('watch', 'serve')));
+gulp.task('dev', gulp.series('build', 'lint', gulp.parallel('watch', 'serve')));

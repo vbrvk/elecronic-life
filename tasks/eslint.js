@@ -14,6 +14,7 @@ module.exports = function (opt) {
 		try {
 			eslintCashe = JSON.parse(fs.readFileSync(eslintFileCashe));
 		} catch (e) {
+			fs.mkdirSync(process.cwd() + '/tmp/');
 			console.log('Cash is empty');
 		}
 

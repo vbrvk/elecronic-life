@@ -11,5 +11,18 @@ const directions = {
 	nw: new Vector(-1, -1),
 };
 
-export default { directions };
-export { directions };
+const plan = ['############################',
+            '#      #    #      o      ##',
+            '#                          #',
+            '#          #####           #',
+            '##         #   #    ##     #',
+            '###           ##     #     #',
+            '#           ###      #     #',
+            '#   ####                   #',
+            '#   ##       o             #',
+            '# o  #         o       ### #',
+            '#    #                     #',
+            '############################'];
+
+export default { directions, plan };
+export { directions, plan };

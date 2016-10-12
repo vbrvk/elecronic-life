@@ -10,4 +10,5 @@ describe('Bouncing critter', () => {
 		bouncingCritter.should.to.be.instanceof(BouncingCritter);
 		Object.keys(directions).should.to.include(bouncingCritter.direction);
 	});
+	it('Should return action object with direction and type');
 });

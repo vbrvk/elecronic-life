@@ -1,4 +1,4 @@
-export default function Grid(height, width) {
+export default function Grid(width, height) {
 	this.space = Array(height * width);
 	this.height = height;
 	this.width = width;

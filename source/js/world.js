@@ -36,3 +36,9 @@ export default class World {
 		return output;
 	}
 }
+
+function Wall() {
+	return;
+}
+
+export { Wall, World };

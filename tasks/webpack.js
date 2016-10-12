@@ -68,7 +68,7 @@ module.exports = (opt) => {
 	};
 
 	if (!opt.isDev) {
-		module.exports.plugins.push(
+		webpackOptions.plugins.push(
 			new webpack.optimize.UglifyJsPlugin({
 				compress: {
 					warnings: false,

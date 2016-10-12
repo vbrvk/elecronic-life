@@ -1,4 +1,4 @@
-const Vector = require('../js/vector.js').default;
+const Vector = require('../vector.js').default;
 const assert = require('chai').assert;
 
 describe('Vector struct', () => {

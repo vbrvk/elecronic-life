@@ -46,7 +46,7 @@ module.exports = (opt) => {
 		],
 
 		resolve: {
-			modulesDirectories: 'node_modules',
+			modulesDirectories: ['node_modules'],
 			extensions: ['', '.js'],
 		},
 
@@ -79,7 +79,7 @@ module.exports = (opt) => {
 		);
 	}
 	return function res(callback) {
-		return gulp.src('source/js/*.js')
+		return gulp.src('source/js/main.js')
 			.pipe(plumber({
 				errorHandler: notify.onError(err => ({
 					title: 'Webpack',

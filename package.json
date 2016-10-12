@@ -8,7 +8,8 @@
     "clean": "gulp clean",
     "build": "gulp build",
     "lint": "gulp lint",
-    "dev": "gulp dev"
+    "dev": "gulp dev",
+		"start": "env NODE_ENV='production' npm run build" 
   },
   "author": "",
   "license": "ISC",

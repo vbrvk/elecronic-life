@@ -1,3 +1,5 @@
+import Vector from './vector';
+
 export default function Grid(width, height) {
 	this.space = Array(height * width);
 	this.height = height;
@@ -14,4 +16,15 @@ Grid.prototype.set = function set(vector, value) {
 
 Grid.prototype.get = function get(vector) {
 	return this.space[vector.x + (vector.y * this.width)];
+};
+
+Grid.prototype.forEach = function forEach(f, context) {
+	for (let y = 0; y < this.height; y++) {
+		for (let x = 0; x < this.width; x++) {
+			const value = this.get(new Vector(x, y));
+			if (value != null) {
+				f.call(context, value, new Vector(x, y));
+			}
+		}
+	}
 };

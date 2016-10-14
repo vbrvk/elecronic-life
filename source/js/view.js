@@ -8,7 +8,7 @@ export default class View {
 		this.vector = vector;
 	}
 	look(direction) {
-		const target = this.vector.plus(directions[direction]);
+		const target = this.vector.add(directions[direction]);
 		if (this.world.grid.isInside(target)) {
 			return World.charFromElement(this.world.grid.get(target));
 		}
@@ -27,6 +27,6 @@ export default class View {
 	find(char) {
 		const found = this.findAll(char);
 		if (isEmpty(found)) return null;
-		return random(0, found.length - 1);
+		return found[random(0, found.length - 1)];
 	}
 }

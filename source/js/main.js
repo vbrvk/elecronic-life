@@ -7,4 +7,9 @@ const world = new World(plan, {
 	o: BouncingCritter,
 });
 
-document.write(world.toString());
+const container = document.querySelector('.container');
+
+
+setInterval(() => {
+	container.innerHTML = world.toString().replace('\n', '</br>');
+}, 3000);

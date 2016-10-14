@@ -2,7 +2,12 @@
 
 body {
 	background-color: $blue;
-	p {
-		color: $yellow;
-	}
+}
+
+.container {
+	width: 50%;
+	height: auto;
+	margin: auto;
+	font-size: 2em;
+	font-family: monospace;
 }

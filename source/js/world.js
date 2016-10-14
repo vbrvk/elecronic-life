@@ -1,17 +1,8 @@
 import { isNull } from 'underscore';
 import Grid from './grid.js';
 import Vector from './vector.js';
-
-const elementFromChar = (legend, char) => {
-	if (char === ' ') {
-		return null;
-	}
-	const element = new (legend[char])();
-	element.originChar = char;
-	return element;
-};
-
-const charFromElement = (element) => (isNull(element) ? ' ' : element.originChar);
+import { directions } from './world-constants';
+import View from './view';
 
 export default class World {
 	constructor(map, legend) {
@@ -20,7 +11,7 @@ export default class World {
 		this.legend = legend;
 		map.forEach((line, y) => {
 			for (let x = 0; x < line.length; x++) {
-				grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
+				grid.set(new Vector(x, y), World.elementFromChar(legend, line[x]));
 			}
 		});
 	}
@@ -29,11 +20,52 @@ export default class World {
 		for (let y = 0; y < this.grid.height; y++) {
 			for (let x = 0, element; x < this.grid.width; x++) {
 				element = this.grid.get(new Vector(x, y));
-				output += charFromElement(element);
+				output += World.charFromElement(element);
 			}
 			output += '\n';
 		}
 		return output;
+	}
+	turn() {
+		const acted = [];
+		this.grid.forEach((critter, vector) => {
+			if (critter.act && !acted.includes(critter)) {
+				acted.push(critter);
+				this.letAct(critter, vector);
+			}
+		}, this);
+	}
+	letAct(critter, vector) {
+		const action = critter.act(new View(this, vector));
+		if (action && action.type === 'move') {
+			const destination = this.checkDestination(action, vector);
+			if (destination && this.grid.get(destination) === ' ') {
+				this.grid.set(vector, null);
+				this.grid.set(destination, critter);
+			}
+		}
+	}
+	checkDestination(action, vector) {
+		if (Object.keys(directions).includes(action.direction)) {
+			const dest = vector.plus(directions[action.direction]);
+			if (this.grid.isInside(dest)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	static elementFromChar(legend, char) {
+		if (char === ' ') {
+			return null;
+		}
+		const element = new (legend[char])();
+		element.originChar = char;
+		return element;
+	}
+
+	static charFromElement(element) {
+		return isNull(element) ? ' ' : element.originChar;
 	}
 }
 

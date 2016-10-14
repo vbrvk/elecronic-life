@@ -8,8 +8,8 @@ const world = new World(plan, {
 });
 
 const container = document.querySelector('.container');
-
-
+const text = container.appendChild(document.createTextNode(world.toString()));
 setInterval(() => {
-	container.innerHTML = world.toString().replace('\n', '</br>');
-}, 3000);
+	world.turn();
+	text.textContent = world.toString();
+}, 700);

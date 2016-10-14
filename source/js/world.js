@@ -13,7 +13,7 @@ export default class World {
 			for (let x = 0; x < line.length; x++) {
 				grid.set(new Vector(x, y), World.elementFromChar(legend, line[x]));
 			}
-		});
+		}, this);
 	}
 	toString() {
 		let output = '';
@@ -39,7 +39,7 @@ export default class World {
 		const action = critter.act(new View(this, vector));
 		if (action && action.type === 'move') {
 			const destination = this.checkDestination(action, vector);
-			if (destination && this.grid.get(destination) === ' ') {
+			if (destination && World.charFromElement(this.grid.get(destination)) === ' ') {
 				this.grid.set(vector, null);
 				this.grid.set(destination, critter);
 			}
@@ -47,12 +47,12 @@ export default class World {
 	}
 	checkDestination(action, vector) {
 		if (Object.keys(directions).includes(action.direction)) {
-			const dest = vector.plus(directions[action.direction]);
+			const dest = vector.add(directions[action.direction]);
 			if (this.grid.isInside(dest)) {
-				return true;
+				return dest;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	static elementFromChar(legend, char) {

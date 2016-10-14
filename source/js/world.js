@@ -4,17 +4,6 @@ import Vector from './vector.js';
 import { directions } from './world-constants';
 import View from './view';
 
-const elementFromChar = (legend, char) => {
-	if (char === ' ') {
-		return null;
-	}
-	const element = new (legend[char])();
-	element.originChar = char;
-	return element;
-};
-
-const charFromElement = (element) => (isNull(element) ? ' ' : element.originChar);
-
 export default class World {
 	constructor(map, legend) {
 		const grid = new Grid(map[0].length, map.length);
@@ -22,7 +11,7 @@ export default class World {
 		this.legend = legend;
 		map.forEach((line, y) => {
 			for (let x = 0; x < line.length; x++) {
-				grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
+				grid.set(new Vector(x, y), World.elementFromChar(legend, line[x]));
 			}
 		});
 	}
@@ -31,7 +20,7 @@ export default class World {
 		for (let y = 0; y < this.grid.height; y++) {
 			for (let x = 0, element; x < this.grid.width; x++) {
 				element = this.grid.get(new Vector(x, y));
-				output += charFromElement(element);
+				output += World.charFromElement(element);
 			}
 			output += '\n';
 		}
@@ -64,6 +53,19 @@ export default class World {
 			}
 		}
 		return false;
+	}
+
+	static elementFromChar(legend, char) {
+		if (char === ' ') {
+			return null;
+		}
+		const element = new (legend[char])();
+		element.originChar = char;
+		return element;
+	}
+
+	static charFromElement(element) {
+		return isNull(element) ? ' ' : element.originChar;
 	}
 }
 

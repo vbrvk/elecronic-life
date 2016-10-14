@@ -1,6 +1,8 @@
 import { isNull } from 'underscore';
 import Grid from './grid.js';
 import Vector from './vector.js';
+import { directions } from './world-constants';
+import View from './view';
 
 const elementFromChar = (legend, char) => {
 	if (char === ' ') {
@@ -34,6 +36,34 @@ export default class World {
 			output += '\n';
 		}
 		return output;
+	}
+	turn() {
+		const acted = [];
+		this.grid.forEach((critter, vector) => {
+			if (critter.act && !acted.includes(critter)) {
+				acted.push(critter);
+				this.letAct(critter, vector);
+			}
+		}, this);
+	}
+	letAct(critter, vector) {
+		const action = critter.act(new View(this, vector));
+		if (action && action.type === 'move') {
+			const destination = this.checkDestination(action, vector);
+			if (destination && this.grid.get(destination) === ' ') {
+				this.grid.set(vector, null);
+				this.grid.set(destination, critter);
+			}
+		}
+	}
+	checkDestination(action, vector) {
+		if (Object.keys(directions).includes(action.direction)) {
+			const dest = vector.plus(directions[action.direction]);
+			if (this.grid.isInside(dest)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 

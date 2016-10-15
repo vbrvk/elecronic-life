@@ -1,7 +1,7 @@
 import { isNull } from 'underscore';
 import Grid from './grid.js';
 import Vector from './vector.js';
-import { directions } from './world-constants';
+import { directions, actionTypes } from './world-constants';
 import View from './view';
 
 export default class World {
@@ -73,4 +73,17 @@ function Wall() {
 	return;
 }
 
-export { Wall, World };
+class LifeLikeWorld extends World {
+	letAct(critter, vector) {
+		const action = critter.act(new View(this, vector));
+		const actionProps = { world: this, critter, vector, action };
+		const handled = action &&
+					actionTypes[action] &&
+					actionTypes[action](actionProps);
+		if (!handled) {
+			actionTypes.default(actionProps);
+		}
+	}
+}
+
+export { Wall, World, LifeLikeWorld };

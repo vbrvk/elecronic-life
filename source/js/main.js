@@ -2,24 +2,47 @@
 import { LifeLikeWorld, Wall } from './world';
 // import BouncingCritter from './critters/bouncing-criters';
 import Plant from './critters/plant';
-import { SmartPlantEater } from './critters/plant-eater';
+import { SmartEater } from './critters/plant-eater';
 
 const world = new LifeLikeWorld(
-	['############################',
-   '#####                 ######',
-   '##   ***                **##',
-   '#   *##**         **  O  *##',
-   '#    ***     O    ##**    *#',
-   '#       O         ##***    #',
-   '#                 ##**     #',
-   '#   O       #*             #',
-   '#*          #**       O    #',
-   '#***        ##**    O    **#',
-   '##****     ###***       *###',
-   '############################'],
-  { '#': Wall,
-   O: SmartPlantEater,
-   '*': Plant }
+	['####################################################',
+   '#                 ####         ****              ###',
+   '#   *  @  ##                 ########       OO    ##',
+   '#   *    ##        O O                 ****       *#',
+   '#       ##*                        ##########     *#',
+   '#      ##***  *         ****                     **#',
+   '#* **  #  *  ***      #########                  **#',
+   '#* **  #      *               #   *              **#',
+   '#     ##              #   O   #  ***          ######',
+   '#*            @       #       #   *        O  #    #',
+   '#*                    #  ######                 ** #',
+   '###          ****          ***                  ** #',
+   '#       O                        @         O       #',
+   '#   *     ##  ##  ##  ##               ###      *  #',
+   '#   **         #              *       #####  O     #',
+   '##  **  O   O  #  #    ***  ***        ###      ** #',
+   '###               #   *****                    ****#',
+   '####################################################'],
+	{
+		'#': {
+			constructor: Wall,
+		},
+		O: {
+			constructor: SmartEater,
+			props: {
+				eat: '*',
+			},
+		},
+		'@': {
+			constructor: SmartEater,
+			props: {
+				eat: 'O',
+			},
+		},
+		'*': {
+			constructor: Plant,
+		},
+	}
 );
 
 const container = document.querySelector('.container');

@@ -78,8 +78,8 @@ class LifeLikeWorld extends World {
 		const action = critter.act(new View(this, vector));
 		const actionProps = { world: this, critter, vector, action };
 		const handled = action &&
-					actionTypes[action] &&
-					actionTypes[action](actionProps);
+					actionTypes[action.type] &&
+					actionTypes[action.type](actionProps);
 		if (!handled) {
 			actionTypes.default(actionProps);
 		}

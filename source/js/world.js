@@ -59,7 +59,7 @@ export default class World {
 		if (char === ' ') {
 			return null;
 		}
-		const element = new (legend[char])();
+		const element = new (legend[char].constructor)(legend[char].props);
 		element.originChar = char;
 		return element;
 	}

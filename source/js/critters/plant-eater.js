@@ -23,10 +23,10 @@ export default class PlantEater {
 }
 
 class SmartEater extends PlantEater {
-	constructor(eat) {
+	constructor(props) {
 		super();
 		this.lastStepDirection = null;
-		this.eat = eat;
+		this.eat = props.eat;
 	}
 
 	act(view) {

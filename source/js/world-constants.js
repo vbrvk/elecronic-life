@@ -44,7 +44,7 @@ const actionTypes = {
 		const action = opt.action;
 
 		const destination = world.checkDestination(action, vector);
-		if (destination == null || critter.energy <= 1 || world.grid.get(vector) !== ' ') {
+		if (destination == null || critter.energy <= 1 || world.grid.get(destination) != null) {
 			return false;
 		}
 		critter.energy -= 1;
@@ -73,7 +73,7 @@ const actionTypes = {
 		const vector = opt.vector;
 		const action = opt.action;
 
-		const baby = World.elementFromChar(world, critter.originChar);
+		const baby = World.elementFromChar(world.legend, critter.originChar);
 		const dest = world.checkDestination(action, vector);
 		if (dest == null || critter.energy <= 2 * baby.energy || world.grid.get.dest != null) {
 			return false;

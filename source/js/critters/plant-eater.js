@@ -22,10 +22,11 @@ export default class PlantEater {
 	}
 }
 
-class SmartPlantEater extends PlantEater {
-	constructor() {
+class SmartEater extends PlantEater {
+	constructor(eat) {
 		super();
 		this.lastStepDirection = null;
+		this.eat = eat;
 	}
 
 	act(view) {
@@ -33,7 +34,7 @@ class SmartPlantEater extends PlantEater {
 		if (this.energy > 60 && space) {
 			return { type: 'reproduce', direction: space };
 		}
-		const plant = view.find('*');
+		const plant = view.find(this.eat);
 		if (plant) {
 			return { type: 'eat', direction: plant };
 		}
@@ -58,4 +59,4 @@ class SmartPlantEater extends PlantEater {
 	}
 }
 
-export { PlantEater, SmartPlantEater };
+export { PlantEater, SmartEater };

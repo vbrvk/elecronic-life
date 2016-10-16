@@ -2,7 +2,7 @@
 import { LifeLikeWorld, Wall } from './world';
 // import BouncingCritter from './critters/bouncing-criters';
 import Plant from './critters/plant';
-import PlantEater from './critters/plant-eater';
+import { SmartPlantEater } from './critters/plant-eater';
 
 const world = new LifeLikeWorld(
 	['############################',
@@ -18,7 +18,7 @@ const world = new LifeLikeWorld(
    '##****     ###***       *###',
    '############################'],
   { '#': Wall,
-   O: PlantEater,
+   O: SmartPlantEater,
    '*': Plant }
 );
 

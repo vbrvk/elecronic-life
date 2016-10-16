@@ -12,6 +12,12 @@ const directions = {
 	nw: new Vector(-1, -1),
 };
 
+directions.dirPlus = (dir, n) => {
+	const directionsName = Object.keys(directions);
+	const indexDirection = directionsName.indexOf(dir);
+	return directionsName[(indexDirection + n + 8) % 8];
+};
+
 const plan = ['############################',
             '#      #    #      o      ##',
             '#                          #',
